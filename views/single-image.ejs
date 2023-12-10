@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Single Image</title>
+</head>
+<body>
+    <p>You are logged in as: <%= data.username %> [<%= data.userID %>]</p>
+    <p><img src = "<%= data.imageSrc %>" /></p>
+
+    <h3>Comments</h3>
+
+    <ul>
+        <% for (const comment of comments){ %>
+            <li><%= comment.text %></li>
+            <%
+
+        }
+    </ul>
+    
+</body>
+</html>

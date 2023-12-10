@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <title>Deliagram</title>
+</head>
+<body>
+    <nav class="navbar navbar-light bg-light ">
+    
+    <h1 class="mx-auto">Welcome to Deliagram!</h1>
+    
+    <form action = "/logout" method = "POST">
+    <input type="submit" value="Log out" class="btn btn-dark">
+</form>
+</nav>
+<div class="row justify-content-center my-3">
+    <a href="imageUpload">
+        <input  type="submit" value="Post an Image" class="btn btn-primary">
+    </a>
+</div>
+<div class="row justify-content-center">
+    
+    <%  if(locals.images){ %>
+        <% images.forEach(function(image) { %>
+            <div class="col-md-4">
+              <div class="card" style="width: 18rem;">
+                <img src="/uploads/resized/<%= image.imageName %>" class="card-img-top" alt="<%= image.imageName %>">
+                <div class="card-body">
+                  <h5 class="card-title"><%= image.imageName %></h5>
+                  <p class="card-text"><small class="text-muted">Posted by <%= image.username %> on <%= image.uploadTime %>
+                    %></small></p>
+                    
+                    <div class="my-3">
+                      <form action="/like" method="POST">
+                        <input type="hidden" name="imageName" value="<%= image.imageName %>">
+                        <input type="submit" value="Like" class="btn btn-outline-primary btn-sm">
+                        
+                    </form>
+                    <p>Total Likes: <%= image.totalLikes %></p>
+                    <script>console.log("<%= image.totalLikes %>")</script>
+                    </div>
+                    
+                    <!-- Add this code block inside the card-body div, after the like button and total likes paragraph -->
+                    <div class="card-comments my-3">
+                      <h6>Comments:</h6>
+                      <% image.comments.forEach(function(comment) { %>
+                        <p><small class="text-muted"><%= comment.text %></small></p>
+                      <% }); %>
+                    </div>
+
+                    <!-- Corrected comment form placement -->
+                    <form action="/new-comment" method="POST" enctype="multipart/form-data">
+                      <input type="hidden" name="imageName" value="<%= image.imageName %>"> <!-- Add this hidden input field -->
+                      <input type="text" name="commentText" placeholder="Add a comment">
+                      <div class="my-3">
+                        <input type="submit" value="Post Comment" class="btn btn-outline-primary btn-sm">
+                      </div>
+                    </form>
+                
+                </div>
+              </div>
+            </div>
+          <% }); %>
+          
+    <% } %>
+    
+</div>
+
+</body>
+</html>
